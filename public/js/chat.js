@@ -39,36 +39,56 @@ function connectSocket() {
     });
 }
 
-// Lấy danh sách người dùng online
-async function getOnlineUsers() {
+// Lấy danh sách người dùng online và offline
+async function getAllUsers() {
     try {
-        const res = await fetch('/chat/online-users');
-        const users = await res.json();
-        displayUsers(users);
+        const res = await fetch('/users/list');
+        const { online, offline } = await res.json();
+        displayAllUsers(online, offline);
     } catch (error) {
         console.error('Error fetching users:', error);
     }
 }
 
-// Hiển thị danh sách người dùng (loại bỏ user hiện tại)
-function displayUsers(users) {
+// Hiển thị cả online và offline
+function displayAllUsers(online, offline) {
     const userList = document.getElementById('userList');
-    const filteredUsers = users.filter(user => user._id !== currentUserId);
-    userList.innerHTML = filteredUsers.map(user => `
-        <div class="user-item" data-user-id="${user._id}">
-            <div class="d-flex align-items-center">
-                <span style="position: relative; display: inline-block;">
-                  <img src="${user.avatar ? user.avatar : 'https://via.placeholder.com/40'}" onerror="this.src='https://via.placeholder.com/40'" class="rounded-circle me-2" width="40" height="40">
-                  <span style="position: absolute; bottom: 2px; right: 6px; width: 12px; height: 12px; background: #28a745; border: 2px solid #fff; border-radius: 50%; display: block;"></span>
-                </span>
-                <div>
-                    <h6 class="mb-0">${user.username}</h6>
-                    <small class="text-muted">${user.status || ''}</small>
+    let html = '';
+    if (online.length > 0) {
+        html += `<div class='px-3 pt-2 pb-1 fw-bold'>Đang online</div>`;
+        html += online.filter(user => user._id !== currentUserId).map(user => `
+            <div class="user-item" data-user-id="${user._id}">
+                <div class="d-flex align-items-center">
+                    <span style="position: relative; display: inline-block;">
+                      <img src="${user.avatar ? user.avatar : 'https://via.placeholder.com/40'}" onerror="this.src='https://via.placeholder.com/40'" class="rounded-circle me-2" width="40" height="40">
+                      <span style="position: absolute; bottom: 2px; right: 6px; width: 12px; height: 12px; background: #28a745; border: 2px solid #fff; border-radius: 50%; display: block;"></span>
+                    </span>
+                    <div>
+                        <h6 class="mb-0">${user.username}</h6>
+                        <small class="text-success">online</small>
+                    </div>
                 </div>
             </div>
-        </div>
-    `).join('');
-
+        `).join('');
+    }
+    if (offline.length > 0) {
+        html += `<div class='px-3 pt-2 pb-1 fw-bold text-muted'>Đang offline</div>`;
+        html += offline.filter(user => user._id !== currentUserId).map(user => `
+            <div class="user-item" data-user-id="${user._id}">
+                <div class="d-flex align-items-center">
+                    <span style="position: relative; display: inline-block;">
+                      <img src="${user.avatar ? user.avatar : 'https://via.placeholder.com/40'}" onerror="this.src='https://via.placeholder.com/40'" class="rounded-circle me-2" width="40" height="40">
+                      <span style="position: absolute; bottom: 2px; right: 6px; width: 12px; height: 12px; background: #ccc; border: 2px solid #fff; border-radius: 50%; display: block;"></span>
+                    </span>
+                    <div>
+                        <h6 class="mb-0">${user.username}</h6>
+                        <small class="text-muted">offline</small>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+    userList.innerHTML = html;
     // Thêm sự kiện click cho mỗi user
     document.querySelectorAll('.user-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -290,7 +310,7 @@ if (avatarInput) {
             const data = await res.json();
             if (data.avatar) {
                 currentAvatar.src = data.avatar + '?t=' + Date.now(); // cập nhật avatar mới
-                getOnlineUsers();
+                getAllUsers();
             } else {
                 alert(data.message || 'Lỗi upload avatar');
             }
@@ -346,7 +366,7 @@ if (logoutBtn) {
 if (window.location.pathname === '/chat') {
     document.addEventListener('DOMContentLoaded', async () => {
         await getCurrentUser();
-        getOnlineUsers();
+        getAllUsers();
         connectSocket();
         setupSocketRealtime();
     });
