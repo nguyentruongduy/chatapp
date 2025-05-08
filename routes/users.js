@@ -29,6 +29,12 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Email đã được sử dụng' });
     }
 
+    // Kiểm tra username đã tồn tại
+    user = await User.findOne({ username });
+    if (user) {
+      return res.status(400).json({ message: 'Tên người dùng đã được sử dụng' });
+    }
+
     // Tạo user mới
     user = new User({
       username,
