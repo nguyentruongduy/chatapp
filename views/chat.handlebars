@@ -1,0 +1,218 @@
+<div class="center-chat-container">
+    <div class="chat-main-card">
+        <!-- Danh sách người dùng online -->
+        <div class="chat-sidebar">
+            <div class="card border-0 h-100">
+                <div class="card-header bg-white border-0">
+                    <h5 class="mb-0">Người dùng online</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush" id="userList">
+                        <!-- Danh sách người dùng sẽ được thêm vào đây -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khu vực chat -->
+        <div class="chat-content">
+            <div class="card border-0 rounded-0 rounded-top-3">
+                <div class="card-header bg-white border-0 rounded-0 rounded-top-3">
+                    <h5 class="mb-0" id="chatHeader">Chọn người để chat</h5>
+                </div>
+                <div class="chat-messages" id="messageArea">
+                    <!-- Tin nhắn sẽ được thêm vào đây -->
+                </div>
+                <form id="messageForm" class="mt-0 p-3 border-0 bg-white d-flex align-items-center">
+                    <input type="text" class="form-control" id="messageInput" placeholder="Nhập tin nhắn..." disabled>
+                    <button class="btn btn-primary" type="submit" disabled>Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editMessageModal" tabindex="-1" aria-labelledby="editMessageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="editMessageForm">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editMessageModalLabel">Sửa tin nhắn</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editMessageId">
+          <textarea class="form-control" id="editMessageContent" rows="3" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+          <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+body {
+    background: #18191A;
+    height: 100vh;
+    min-height: 100vh;
+}
+
+.center-chat-container {
+    min-height: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 0;
+    flex: 1 1 auto;
+}
+
+.chat-main-card {
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    padding: 0;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 600px;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1 1 auto;
+}
+
+.chat-sidebar {
+    background: #f8f9fa;
+    border-right: 1px solid #eee;
+    min-width: 220px;
+    max-width: 260px;
+    padding: 0;
+}
+
+.chat-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 0 24px 24px 0;
+    box-shadow: none;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem 1.5rem 1rem 1.5rem;
+    background: #fff;
+    border-radius: 0 0 24px 24px;
+    max-height: 500px;
+}
+
+.message {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    min-width: 120px;
+    width: fit-content;
+    max-width: 98%;
+    word-break: break-word;
+    font-size: 1.05rem;
+}
+
+.message.sent {
+    background: #1877f2;
+    color: white;
+    margin-left: auto;
+}
+
+.message.received {
+    background: #f0f2f5;
+    color: #222;
+    margin-right: auto;
+}
+
+#messageForm .form-control {
+    border-radius: 2rem 0 0 2rem;
+    border: none;
+    background: #f0f2f5;
+    font-size: 1.05rem;
+    padding-left: 1.2rem;
+}
+#messageForm .form-control:focus {
+    box-shadow: none;
+    background: #f0f2f5;
+}
+#messageForm .btn {
+    border-radius: 0 2rem 2rem 0;
+    font-weight: 500;
+    font-size: 1.05rem;
+    background: #1877f2;
+    border: none;
+    padding: 0 1.5rem;
+}
+#messageForm .btn:active, #messageForm .btn:focus {
+    background: #1456b8;
+}
+
+.user-item {
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+    background: transparent;
+    transition: background 0.2s;
+}
+.user-item:hover, .user-item.active {
+    background: #e9ecef;
+}
+
+@media (max-width: 900px) {
+    .chat-main-card { width: 100vw; min-height: 100vw; }
+    .chat-sidebar { min-width: 120px; }
+    .chat-content { max-width: 100vw; border-radius: 0; }
+}
+
+.message-actions-outside {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  margin-right: 8px;
+}
+.message-actions-outside .btn {
+  padding: 0 6px;
+  font-size: 0.95em;
+  text-decoration: underline;
+}
+
+.chat-context-menu {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 4px 0;
+  z-index: 9999;
+  min-width: 80px;
+  display: none;
+}
+.chat-context-menu .btn {
+  width: 100%;
+  text-align: left;
+  padding: 4px 16px;
+  font-size: 1em;
+  border-radius: 0;
+}
+.chat-context-menu .btn:hover {
+  background: #f0f0f0;
+}
+</style> 

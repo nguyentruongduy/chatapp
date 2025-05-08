@@ -1,0 +1,122 @@
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4 text-white">Chào mừng đến với Chat App</h1>
+        <p class="lead mb-4 text-white">Ứng dụng chat thời gian thực được xây dựng với Node.js, Express, Socket.IO và MongoDB</p>
+        
+        {{#unless user}}
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/login" class="btn btn-primary btn-lg px-4 gap-3">Đăng nhập</a>
+                <a href="/register" class="btn btn-outline-primary btn-lg px-4">Đăng ký</a>
+            </div>
+        {{else}}
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="/chat" class="btn btn-primary btn-lg px-4 gap-3">Vào Chat</a>
+            </div>
+        {{/unless}}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Real-time</h3>
+                <p class="card-text">Chat thời gian thực với Socket.IO, tin nhắn được gửi và nhận ngay lập tức.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Bảo mật</h3>
+                <p class="card-text">Bảo mật với JWT, mã hóa mật khẩu và xác thực người dùng.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-database fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Lưu trữ</h3>
+                <p class="card-text">Lưu trữ tin nhắn và thông tin người dùng trong MongoDB.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.home-hero {
+    background: #1877f2;
+    color: #fff;
+    border-radius: 24px;
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(24,119,242,0.10);
+}
+.home-hero h1 {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #fff;
+}
+.home-hero p {
+    font-size: 1.25rem;
+    color: #e3e6ea;
+}
+.home-hero .btn-primary, .home-hero .btn-outline-primary {
+    font-size: 1.15rem;
+    padding: 10px 32px;
+    border-radius: 2rem;
+    font-weight: 600;
+}
+.home-hero .btn-primary {
+    background: #fff;
+    color: #1877f2;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+}
+.home-hero .btn-primary:hover {
+    background: #1456b8;
+    color: #fff;
+}
+.home-hero .btn-outline-primary {
+    border: 2px solid #fff;
+    color: #fff;
+    background: transparent;
+    transition: background 0.2s, color 0.2s;
+}
+.home-hero .btn-outline-primary:hover {
+    background: #fff;
+    color: #1877f2;
+}
+.card {
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(24,119,242,0.08);
+    border: none;
+    background: #fff;
+}
+.card-title {
+    color: #1877f2;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+.card-text {
+    color: #444;
+    font-size: 1.08rem;
+}
+.card i {
+    color: #1877f2;
+    background: #e9f0fb;
+    border-radius: 50%;
+    padding: 16px;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(24,119,242,0.08);
+}
+@media (max-width: 900px) {
+    .home-hero { padding: 1.5rem 0.5rem; }
+    .card-title { font-size: 1.1rem; }
+    .card i { font-size: 2rem; padding: 10px; }
+}
+</style> 

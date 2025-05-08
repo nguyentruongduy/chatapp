@@ -1,0 +1,84 @@
+/* Custom styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    border: none;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+/* Chat styles */
+.chat-messages {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.message {
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+.message.sent {
+    background-color: #007bff;
+    color: #fff;
+    margin-left: auto;
+}
+
+.message.received {
+    background-color: #e9ecef;
+    margin-right: auto;
+}
+
+/* User list styles */
+.user-item {
+    transition: background-color 0.2s;
+}
+
+.user-item:hover {
+    background-color: #f8f9fa;
+}
+
+.user-item.active {
+    background-color: #e9ecef;
+}
+
+/* Form styles */
+.form-control:focus {
+    box-shadow: none;
+    border-color: #80bdff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .chat-messages {
+        height: 300px;
+    }
+    
+    .message {
+        max-width: 85%;
+    }
+} 
