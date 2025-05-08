@@ -29,9 +29,9 @@ app.use(cookieParser());
 
 // Session middleware
 app.use(session({
-  secret: process.env.JWT_SECRET,
-  resave: false,
-  saveUninitialized: false,
+    secret: process.env.SESSION_SECRET || 'your_default_secret', // Thêm dòng này
+    resave: false,
+    saveUninitialized: false,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24 hours
 }));
