@@ -60,10 +60,8 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         const data = await res.json();
 
         if (res.ok) {
-            // Lưu token vào localStorage
-            localStorage.setItem('token', data.token);
-            // Chuyển hướng đến trang chat
-            window.location.href = '/chat';
+            alert('Đăng ký thành công! Vui lòng đăng nhập.');
+            window.location.href = '/login';
         } else {
             alert(data.message);
         }

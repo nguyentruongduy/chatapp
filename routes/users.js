@@ -29,12 +29,6 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Email đã được sử dụng' });
     }
 
-    // Kiểm tra username đã tồn tại
-    user = await User.findOne({ username });
-    if (user) {
-      return res.status(400).json({ message: 'Tên người dùng đã được sử dụng' });
-    }
-
     // Tạo user mới
     user = new User({
       username,
@@ -140,11 +134,13 @@ router.post('/logout', auth, async (req, res) => {
   }
 });
 
-// Lấy danh sách user online
-router.get('/online', auth, async (req, res) => {
+// Lấy danh sách user online và offline
+router.get('/list', auth, async (req, res) => {
   try {
-    const users = await User.find({ status: 'online' }, 'username avatar email');
-    res.json(users);
+    const users = await User.find({}, 'username avatar email status');
+    const online = users.filter(u => u.status === 'online');
+    const offline = users.filter(u => u.status !== 'online');
+    res.json({ online, offline });
   } catch (error) {
     res.status(500).json({ message: 'Lỗi server' });
   }
